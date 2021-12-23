@@ -1,0 +1,103 @@
+<!--cart-->
+
+{% if cart.item_count > 0 %}
+<h1 class="text-center text-4xl mt-6">Cart Items</h1>
+<form action="/cart" method="post" novalidate>
+  <div class="h-auto">
+    <div class="flex flex-col items-center space-y-7 py-9">
+      <div class="flex justify-center py-7 space-x-20 flex-wrap sm:visible invisible">
+        <span>Product</span>
+        <span>Price</span>
+        <span>Quantity</span>
+        <span>Total</span>
+      </div>
+      <hr style="width:30%;text-align:left;margin-left:0" class="sm:visible invisible">
+      {% for item in cart.items %}
+        <div class="border py-8 hover:border-black flex-col rounded-sm shadow w-72 sm:w-7/12 items-center">
+          <div class="flex sm:flex-row flex-col items-center">
+            <div class="h-auto xsm:w-10 mx-5">
+                <img src="{{ item | img_url: 'large' }}" alt="">
+            </div>
+            <h1 class="group flex items-center xsm:mr-16 xsm:text-base text-3xl xsm:font-normal font-semibold">{{ item.title }}</h1>
+            <span class="flex items-center xsm:mr-20 xsm:text-base text-3xl text-gray-700">{{ item.price  | money_with_currency }}</span>
+            <input class="flex text-center items-center rounded border border-8 border-black xsm:mr-20 xsm:w-14" type="number" min="1" value="{{ item.quantity }}">
+            <!-- <span class="flex items-center xsm:mr-20">{{ item.quantity }}</span> -->
+            <span class="flex items-center">{{ item.final_line_price | money_with_currency}}</span>
+          </div>
+          <div class="flex space-x-4 px-5 py-4 mx-7 xsm:mx-0">
+            <button class="bg-gray-200 rounded-sm px-5 py-1 text-sm font-semibold ">
+              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">Remove</a>  
+            </button>
+            
+          </div>
+        </div>
+      {% endfor %}
+      <div class="flex flex-row space-x-36">
+        <h1 class="font-bold texl-xl">Sub total: <span class="text-gray-600">{{ cart.total_price | money_with_currency }}</span></h1>
+        <button type="submit" name="update" class="bg-red-500 text-white rounded-sm px-5 text-sm font-semibold">Update</button>
+      </div>
+      
+      
+      <div class="flex xsm:flex-row flex-col-reverse xsm:space-x-7 py-5">
+        <button class="bg-gray-300 px-5 py-2 rounded-sm my-3">Back to Shopping</button>
+        <button type="submit" name="checkout" class="bg-red-500 px-5 py-2 text-white rounded-sm">Proceed to Checkout</button>
+      </div>
+    </div>
+  </div>
+</form>
+{% else %}
+  <h1 class="m-20 p-40 text-center text-4xl">There is no item in cart</h1>
+{% endif %}  
+<!--cart-->
+
+
+
+
+
+<!-- 
+{% if cart.item_count > 0 %}
+  <h1>cart</h1>
+  <form action="/cart" method="post" novalidate>
+    <table>
+      <thead>
+        <th colspan="2">Prod</th>
+        <th>Price</th>
+        <th>Qty</th>
+        <th>total</th>
+      </thead>
+      <tbody>
+        {% for item in cart.items %}
+          <tr>
+            <td>
+              <a href="{{ item.url | within: collections.all }}">
+                <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+              </a>
+            </td>
+            <td>
+              <a href="{{ item.url }}">{{ item.product.title }}</a>
+              {{ item.variant.title }}
+              <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0">remove</a>
+            </td>
+            <td>{{ item.price | money }}</td>
+            <td>
+              <input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0">
+            </td>
+            <td>
+              {% if item.original_line_price != item.line_price %}{{ item.original_line_price | money }}{% endif %}
+              {{ item.line_price | money }}
+              {% for discount in item.discounts %}{{ discount.title }}{% endfor %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <div>
+      <p>sub total : {{ cart.total_price | money }}</p>
+      <button type="submit" name="update">Update</button>
+      <button type="submit" name="checkout">Checkout</button>
+    </div>
+  </form>
+{% else %}
+  <h2>cart</h2>
+  Cart is empty
+{% endif %} -->

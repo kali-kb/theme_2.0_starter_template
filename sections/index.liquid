@@ -1,0 +1,101 @@
+{{ content_for_index }}
+
+<!-- {% for product in collections.frontpage.products limit:4 %}
+  <div>
+    <a href="{{ product.url | within: collection }}">{{ product.title }}</a>
+    {{ product.price | money }}
+    {% unless product.available %}<br><strong>sold out</strong>{% endunless %}
+    <a href="{{ product.url | within: collection }}">
+      <img src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
+    </a>
+  </div>
+{% endfor %} -->
+ 
+<!-- featured products -->
+
+
+
+<div class="h-auto w-full pt-16 text-center mb-10">
+  <h1 class="text-3xl font-semibold mb-4">Featured Products</h1>
+  <div id="listing-container " class="flex flex-wrap py-6 px-1 justify-around md:justify-center md:space-x-24">
+  {% for collection in collections %}
+    {% for products in collection.products %}
+      {%- comment -%}{% assign product = products | where: "tags", "new-arrivals" %}{%- endcomment -%}
+        <div class="bg-white shadow-md h-auto w-48 m-1 rounded-sm">
+          <div class="overflow-hidden h-52 rounded-t-sm">
+            {% if products.images != blank %}
+              <img src="{{ products.featured_image | img_url: 'large' }}" alt="{{ product.title }}" />
+            {% else %}
+              {{ 'image' | placeholder_svg_tag }}
+            {% endif %}  
+          </div>
+          <div class="pt-2 mb-3">
+            <a href="{{ products.url }}"><span class="font-semibold">{{ products.title }}</span></a>
+            <span class="border text-sm rounded font-semibold p-0.5 border-8 border-yellow-300">{{ products.price | money_with_currency }}</span>
+          </div>
+        </div>
+    {% endfor %}
+  {% endfor %}  
+</div>
+<button class="bg-red-500 px-6 py-2 my-4 font-semibold text-white rounded-sm hover:opacity-60 hover:duration-200 hover:scale-110"><a href="collections/all">Shop Collection</a></button>
+</div>
+
+<!-- featured products -->
+
+
+<!--copy-->
+
+
+
+<div class="bg-[#EEEEEE] w-full flex justify-center sm:flex-row flex-col flex-col-reverse">
+  <div id="copy" class="flex flex-col space-y-8 items-center justify-center md:px-28 xsm:py-0 py-5">
+    <h1 class="text-3xl font-semibold mb-6">Why Buy from us?</h1>
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      Guranteed fast delivery
+    </span>
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      100% Polymer Soft fabric</span
+    >
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      Reasonable Price</span
+    >
+    <span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 inline" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>24/7 Customer Service</span>
+    <button class="bg-red-500 text-white px-4 py-2 hover:scale-110 hover:duration-200"><a href="collections/all">Browse Collection</a></button>
+  </div>
+  <div class="h-auto sm:flex sm:justify-center">
+    <img src="https://images.unsplash.com/photo-1626544872327-f3101a2ff88c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1yZWxhdGVkfDEwfHx8ZW58MHx8fHw%3D&auto=format&fit=crop&w=500&q=60" alt="" />
+  </div>
+</div>
+
+<!--copy-->
+
+{%- comment -%} footer {%- endcomment -%}
+
+{%- comment -%}
+  {% assign links = linklists['footer'].links  %}
+  {% for link in links %}
+    {% if links.size > 3 %}
+      {{ link.title }}
+    {% else %}
+      {{ link.title }}
+    {% endif %}
+  {% endfor %}      
+
+{% for link in linklists['footer'].links %}
+  {{ link.title }}: {{ link.levels }}
+{% endfor %}
+
+  
+
+{%- endcomment -%}

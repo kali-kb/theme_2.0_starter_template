@@ -1,0 +1,12 @@
+{
+    "name": "Product List",
+    "sections": {
+      "main": {
+        "type": "search"
+      }
+    },
+    "order": [
+      "main"
+    ]
+  }
+  
